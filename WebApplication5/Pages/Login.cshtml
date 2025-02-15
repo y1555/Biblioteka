@@ -1,0 +1,18 @@
+﻿@page
+@model WebApplication5.Pages.LoginModel
+@{
+}
+
+<h2>Вход в личный кабинет</h2>
+<form method='post' asp-action="OnPostAsync">
+	<p>
+		<label>ВВедите логин</label><br />
+		<input name='login' />
+	</p>
+	<p>
+		<label>ВВедите пароль</label><br />
+		<input type='password' name='password' />
+	</p>
+	<input type='submit' value='Login' />
+</form>
+<a class="nav-link text-dark" asp-page="/register"> Зарегистрироваться </a>

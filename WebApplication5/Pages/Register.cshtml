@@ -1,0 +1,29 @@
+﻿@page
+@model WebApplication5.Pages.RegisterModel
+@{
+}
+
+<h2>Регистрация</h2>
+<form method='post' asp-action="OnPostAsync">
+	<p>
+		<label>ВВедите логин</label><br />
+		<input name='login' />
+	</p>
+	<p>
+		<label>ВВедите пароль</label><br />
+		<input type='password' name='password' />
+	</p>
+	<p>
+		<label>Повторите пароль</label><br />
+		<input type='password' name='repassword' />
+	</p>
+	<p>
+		<label>ВВедите ваше имя</label><br />
+		<input name='username' />
+	</p>
+	<p>
+		<label>ВВедите возраст пользователя</label><br />
+		<input type='number' name='age' />
+	</p>
+	<input type='submit' value='Register' />
+</form>

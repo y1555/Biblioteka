@@ -1,0 +1,46 @@
+﻿@page 
+@model WebApplication5.Pages.LkModel
+@using WebApplication5.Models
+@{
+	ViewData["Title"] = "Home page";
+}
+
+@if (HttpContext.User.Identity is not null)
+{<h1>Здравствуйте, @HttpContext.User.Identity.Name</h1>}
+
+@if (Model.thisUser.Role == ((int)Roles.Owner)){<h2>Низкий поклон Государю!</h2>}
+@if (Model.thisUser.Role == ((int)Roles.Administrator)){<h2>Приветствую Первого Министра!</h2>}
+@if (Model.thisUser.Role == ((int)Roles.Moderator)){<h2>Пока модер спит - Юзер фигню творит!</h2>}
+
+<div class="album py-5 bg-body-tertiary">
+	<div class="container">
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+			@if (Model.thisUserBooks is not null)
+			{
+				foreach (var b in Model.thisUserBooks)
+				{
+					<div class="card shadow-sm">
+						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Потом картинка</text></svg>
+						<div class="card-body">
+							<p class="card-text bookname"> @b.Name</p>
+							<p class="card-text bookage"> @b.Rating </p>
+							<p class="card-text bookjenres"> @b.Jenres</p>
+							<p class="card-text bookdescription"> @b.Description</p>
+							<div class="d-flex justify-content-between align-items-center">
+								<div class="btn-group">
+									<button type="button" class="btn btn-sm btn-outline-secondary">К книге</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button>
+									@if (Model.thisUser.Role == ((int)Roles.Owner) || Model.thisUser.Role == ((int)Roles.Administrator) || Model.thisUser.Role == ((int)Roles.Moderator))
+									{
+										<button type="button" class="btn btn-sm btn-outline-secondary">Редактировать книгу</button>
+									}
+								</div>
+							</div>
+							<small class="text-body-secondary">9 mins</small>
+						</div>
+					</div>
+				}
+			}
+		</div>
+	</div>
+</div>
