@@ -12,6 +12,52 @@
 @if (Model.thisUser.Role == ((int)Roles.Administrator)){<h2>Приветствую Первого Министра!</h2>}
 @if (Model.thisUser.Role == ((int)Roles.Moderator)){<h2>Пока модер спит - Юзер фигню творит!</h2>}
 
+<form method="post" asp-action="OnPostAsync">
+	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+		<div class="container">
+			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+				<ul class="navbar-nav flex-grow-1">
+					<li class="nav-item">
+						<label>Сортировать по возрастному рейтингу: </label>
+						<select name="byrating" size="1">
+							<option value="@((int)Ages.ziro_plus)">0+</option>
+							<option value="@((int)Ages.three_plus)">3+</option>
+							<option value="@((int)Ages.six_plus)">6+</option>
+							<option value="@((int)Ages.ten_plus)">10+</option>
+							<option value="@((int)Ages.twelwe_plus)">12+</option>
+							<option value="@((int)Ages.fourteen_plus)">14+</option>
+							<option value="@((int)Ages.sixteen_plus)">16+</option>
+							<option value="@((int)Ages.eighteen_plus)">18+</option>
+							<option value="@((int)Ages.twentyone_plus)" selected>21+</option>
+						</select>
+					</li>
+					<li class="nav-item">
+						<label>Сортировать по жанрам: </label>
+						<select name="byjenres" multiple size="1">
+							<option value="@((int)Jenres.fantasy)">fantasy</option>
+							<option value="@((int)Jenres.scifi)">scifi</option>
+							<option value="@((int)Jenres.romantic)">romantic</option>
+							<option value="@((int)Jenres.battle)">battle</option>
+							<option value="@((int)Jenres.fanfic)">fanfic</option>
+						</select>
+					</li>
+					<li class="nav-item">
+						<label>Сортировать по Имени: </label>
+						<select name="byname" size="1">
+							<option value="0">По возрастанию</option>
+							<option value="1">По убыванию</option>
+						</select>
+					</li>
+					<li class="nav-item">
+						<input type="submit" value="Отсортировать" />
+						<input type="reset" value="Сбросить фильтры" />
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</form>
+
 <div class="album py-5 bg-body-tertiary">
 	<div class="container">
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

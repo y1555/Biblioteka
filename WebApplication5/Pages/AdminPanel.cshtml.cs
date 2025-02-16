@@ -12,13 +12,16 @@ namespace WebApplication5.Pages
     public class AdminPanelModel : PageModel
     {
         private readonly ILogger<AdminPanelModel> _logger;
-        public ApplicationContext db;
-        public string output;
+        ApplicationContext db;
+        public BooksParser bp;
+        public List<Book> sortedBooks;
 
         public AdminPanelModel(ILogger<AdminPanelModel> logger, ApplicationContext db)
         {
             this.db = db;
             _logger = logger;
+            bp = new(db);
+            sortedBooks = bp.Sort(db.Books.ToList());
         }
         public void OnGet()
         {
@@ -36,7 +39,7 @@ namespace WebApplication5.Pages
 
             string name = form["name"];
             string rating = form["rating"];
-            string jenres = form["jenres"];
+            string jenres = form["jenres"] + ",";
             string description = form["description"];
 
             List<Book> books = new List<Book>();
@@ -45,6 +48,7 @@ namespace WebApplication5.Pages
             // если пользователь не найден, отправляем статусный код 401
             if (book is null)
             {
+                if (rating is null) rating = Ages.twentyone_plus.ToString();
                 book = new Book(name, int.Parse(rating), description, jenres);
                 db.Books.Add(book);
                 await db.SaveChangesAsync();
@@ -52,6 +56,18 @@ namespace WebApplication5.Pages
             else return BadRequest("Эта хня уже есть");
 
             return Redirect("/AdminPanel");
+        }
+
+        public async Task<IActionResult> OnSortAsync()
+        {
+            var form = HttpContext.Request.Form;
+            string byname = form["byname"];
+            string byrating = form["byrating"];
+            string byjenres = form["byjenres"];
+
+            sortedBooks = bp.Sort(db.Books.ToList(), int.Parse(byrating.ToString()), byjenres, int.Parse(byname));
+
+            return Redirect("/");
         }
     }
 }
